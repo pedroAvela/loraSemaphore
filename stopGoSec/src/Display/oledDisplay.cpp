@@ -26,7 +26,7 @@ void OledDisplay :: startDisplay(){
 
     display.clearDisplay();
     //printMessage("Display okay!", 1);
-    draw();
+    //draw();
 
 }
 

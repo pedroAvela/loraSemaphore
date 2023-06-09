@@ -35,6 +35,7 @@ bool firstStart = true;
 bool blink = true;
 unsigned long blinkTime = 0;
 unsigned long blinkInterval = 1500;
+int rssi;
 
 void setup() {
   Serial.begin(9600);
@@ -47,7 +48,7 @@ void setup() {
   LoRa.onTxDone(sendDone);
   LoRa.onReceive(onReceive);
   LoRa.receive();
-  oled.printMessage("Waiting master...", 1);
+  oled.printMessage("Waiting main...", 1);
 }
 
 void loop() {
@@ -78,7 +79,7 @@ void onReceive(int packetSize){
   }
 
   if(msg != ""){
-    int rssi = LoRa.rssi();
+    rssi = LoRa.rssi();
     message = msg;
   }
 }
@@ -94,7 +95,7 @@ void startLoRa()
   LoRa.setSpreadingFactor(13);
   LoRa.setTxPower(18);
   //LoRa.setSignalBandwidth(10.4E3);
-  LoRa.setSignalBandwidth(250E3);
+  LoRa.setSignalBandwidth(500E3);
   if (!LoRa.begin(BAND)) {
     Serial.println("Starting LoRa failed!");
   }
@@ -118,25 +119,25 @@ void getCommand(){
     Serial.println(message);
     Serial.println(message == "Hello");
     if(message == "Hello"){
-      oled.printMessage("Master found it", 1);
+      oled.printMessage("Main found it", 1);
       send("Hi");
     }
 
     if(message == "red"){
-      oled.printMessage(message, 1);
+      oled.printMessage(message + rssi, 1);
       redLight();
       blink = false;
       send("rOk");
     }
 
     if(message == "tran"){
-      oled.printMessage(message, 1);
+      oled.printMessage(message + rssi, 1);
       redLight();
       send("tOk");
     }
 
     if(message == "green"){
-      oled.printMessage(message, 1);
+      oled.printMessage(message + rssi, 1);
       greenLight();
       send("gOk");
     }

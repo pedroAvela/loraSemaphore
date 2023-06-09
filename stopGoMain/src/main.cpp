@@ -56,7 +56,7 @@ unsigned long blinkTime = 0;
 
 void setup() {
   Serial.begin(9600);
-  Serial.println("LoRa Master");
+  Serial.println("LoRa Main");
   pinMode(ledRed, OUTPUT);
   pinMode(ledGreen, OUTPUT);
   pinMode(buttonMan, INPUT);
@@ -127,7 +127,7 @@ void startLoRa()
   LoRa.setSpreadingFactor(13);
   LoRa.setTxPower(18);
   //LoRa.setSignalBandwidth(10.4E3);
-  LoRa.setSignalBandwidth(250E3);
+  LoRa.setSignalBandwidth(500E3);
   if (!LoRa.begin(BAND)) {
     Serial.println("Starting LoRa failed!");
   }
